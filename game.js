@@ -38,6 +38,44 @@
   let accMs = 0;
   let touchStart = null;
 
+  // Audio Context and Sounds
+  let audioCtx = null;
+
+  function initAudio() {
+    if (audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  function playTone(freq, type, duration, volume) {
+    if (!audioCtx) return;
+    if (audioCtx.state === "suspended") audioCtx.resume();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+
+  function playEatSound() {
+    playTone(523.25, "sine", 0.1, 0.15); // C5
+    setTimeout(() => playTone(783.99, "sine", 0.15, 0.1), 50); // G5
+  }
+
+  function playDieSound() {
+    playTone(220, "sawtooth", 0.4, 0.15); // A3
+    playTone(110, "square", 0.6, 0.1); // A2
+  }
+
   function tickMsForScore(currentScore) {
     const level = Math.floor(currentScore / SPEED_UP_EVERY_POINTS);
     return Math.max(MIN_TICK_MS, BASE_TICK_MS - level * TICK_STEP_MS);
@@ -108,6 +146,7 @@
   function startIfNeeded() {
     if (started) return;
     started = true;
+    initAudio();
     hideOverlay();
   }
 
@@ -126,6 +165,7 @@
 
   function die() {
     alive = false;
+    playDieSound();
     overlay(
       `<div><div class="overlay__title">GAME OVER</div>
       <div>Score: <span class="kbd">${score}</span></div>
@@ -169,6 +209,7 @@
 
     if (willEat) {
       score += 1;
+      playEatSound();
       updateHud();
       food = spawnFood();
     } else {
@@ -316,6 +357,7 @@
       e.preventDefault();
       if (!alive) return;
       if (!started) return startIfNeeded();
+      initAudio();
       return togglePause();
     }
 
