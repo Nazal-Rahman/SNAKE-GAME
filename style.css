@@ -1,0 +1,198 @@
+:root {
+  --bg0: #05050a;
+  --bg1: #070017;
+  --fg: #e9f7ff;
+  --muted: rgba(233, 247, 255, 0.72);
+  --cyan: #00e5ff;
+  --magenta: #ff2bd6;
+  --green: #00ff66;
+  --purple: #a64dff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  background:
+    radial-gradient(1000px 650px at 14% 18%, rgba(255, 43, 214, 0.22), transparent 55%),
+    radial-gradient(900px 650px at 86% 22%, rgba(0, 229, 255, 0.18), transparent 60%),
+    radial-gradient(900px 700px at 60% 90%, rgba(166, 77, 255, 0.14), transparent 60%),
+    linear-gradient(180deg, var(--bg0), var(--bg1) 60%, #04040a);
+}
+
+.frame {
+  width: min(92vw, 760px);
+  border-radius: 18px;
+  padding: 18px 18px 14px;
+  position: relative;
+  background: rgba(6, 6, 14, 0.72);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(255, 43, 214, 0.14) inset,
+    0 0 28px rgba(0, 229, 255, 0.12),
+    0 0 60px rgba(255, 43, 214, 0.08);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.frame::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 2px,
+      transparent 6px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+.hud {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px 12px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.08), rgba(255, 43, 214, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hud__item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.hud__item--right {
+  justify-content: flex-end;
+}
+
+.hud__label {
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hud__value {
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow:
+    0 0 14px rgba(0, 229, 255, 0.16),
+    0 0 10px rgba(255, 43, 214, 0.12);
+}
+
+.stage {
+  position: relative;
+  margin-top: 14px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  background: rgba(4, 4, 10, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(255, 43, 214, 0.12) inset,
+    0 0 22px rgba(0, 229, 255, 0.09);
+}
+
+.stage__canvas {
+  display: block;
+  width: min(92vmin, 600px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  image-rendering: pixelated;
+  filter:
+    drop-shadow(0 0 18px rgba(0, 229, 255, 0.14))
+    drop-shadow(0 0 34px rgba(255, 43, 214, 0.08));
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(233, 247, 255, 0.9);
+  background: radial-gradient(closest-side, rgba(6, 6, 18, 0.75), rgba(6, 6, 18, 0.18));
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  pointer-events: none;
+}
+
+.overlay[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.overlay__title {
+  display: inline-block;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-shadow:
+    0 0 16px rgba(166, 77, 255, 0.2),
+    0 0 12px rgba(0, 229, 255, 0.12);
+}
+
+.kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 1px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  box-shadow:
+    0 0 0 1px rgba(255, 43, 214, 0.1) inset,
+    0 0 16px rgba(0, 229, 255, 0.1);
+}
+
+.hint {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px 6px 4px;
+  color: rgba(233, 247, 255, 0.76);
+  font-size: 12px;
+}
+
+.hint__pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition: none;
+  }
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Neon Snake</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="frame">
+      <header class="hud" aria-label="Scoreboard">
+        <div class="hud__item">
+          <span class="hud__label">SCORE</span>
+          <span id="score" class="hud__value">0</span>
+        </div>
+        <div class="hud__item hud__item--right" aria-label="Speed level">
+          <span class="hud__label">SPEED</span>
+          <span id="speed" class="hud__value">1</span>
+        </div>
+      </header>
+
+      <section class="stage" aria-label="Snake game">
+        <canvas id="game" class="stage__canvas" width="600" height="600"></canvas>
+        <div id="overlay" class="overlay" role="status" aria-live="polite"></div>
+      </section>
+
+      <footer class="hint" aria-label="Controls">
+        <span class="hint__pill">Arrow keys / WASD</span>
+        <span class="hint__pill">Space: pause</span>
+        <span class="hint__pill">R: restart</span>
+      </footer>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
+
