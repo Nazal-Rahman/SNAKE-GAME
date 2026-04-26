@@ -196,3 +196,138 @@ body {
     transition: none;
   }
 }
+
+/* Device Selector */
+.device-selector {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 4, 10, 0.95);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.device-selector[data-visible="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.device-selector__content {
+  text-align: center;
+}
+
+.device-selector__title {
+  font-size: 32px;
+  letter-spacing: 0.2em;
+  margin-bottom: 10px;
+  color: var(--green);
+  text-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+}
+
+.device-selector__subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+.device-selector__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.device-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  color: var(--fg);
+  padding: 14px 40px;
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.1em;
+}
+
+.device-btn:hover {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+/* On-Screen Controls */
+.on-screen-controls {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 10px;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease;
+}
+
+.on-screen-controls[data-visible="true"] {
+  opacity: 1;
+  height: auto;
+  overflow: visible;
+}
+
+.on-screen-controls__group {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+.on-screen-controls__dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.os-btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.os-btn {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--fg);
+  font-size: 24px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.1s ease;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.os-btn:active {
+  transform: translateY(2px);
+  background: rgba(0, 255, 102, 0.2);
+  border-color: var(--green);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.os-btn--wide {
+  width: 140px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+.os-btn--up {
+  margin-bottom: 4px;
+}

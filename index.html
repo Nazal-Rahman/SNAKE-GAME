@@ -22,6 +22,19 @@
       <section class="stage" aria-label="Snake game">
         <canvas id="game" class="stage__canvas" width="600" height="600"></canvas>
         <div id="overlay" class="overlay" role="status" aria-live="polite"></div>
+        
+        <!-- Device Selection Overlay -->
+        <div id="device-selector" class="device-selector" data-visible="true">
+          <div class="device-selector__content">
+            <h1 class="device-selector__title">NEON SNAKE</h1>
+            <p class="device-selector__subtitle">Select your device to continue</p>
+            <div class="device-selector__options">
+              <button class="device-btn" data-device="phone">PHONE</button>
+              <button class="device-btn" data-device="tab">TAB</button>
+              <button class="device-btn" data-device="laptop">LAPTOP</button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <footer class="hint" aria-label="Controls">
@@ -29,6 +42,22 @@
         <span class="hint__pill">Space: pause</span>
         <span class="hint__pill">R: restart</span>
       </footer>
+
+      <!-- On-Screen Controls for Phone/Tab -->
+      <div id="on-screen-controls" class="on-screen-controls" data-visible="false">
+        <div class="on-screen-controls__group">
+          <button id="btn-space" class="os-btn os-btn--wide">SPACE</button>
+          <button id="btn-r" class="os-btn">R</button>
+        </div>
+        <div class="on-screen-controls__dpad">
+          <button id="btn-up" class="os-btn os-btn--up">↑</button>
+          <div class="os-btn-row">
+            <button id="btn-left" class="os-btn">←</button>
+            <button id="btn-down" class="os-btn">↓</button>
+            <button id="btn-right" class="os-btn">→</button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="./game.js"></script>

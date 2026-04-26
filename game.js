@@ -7,6 +7,8 @@
   const scoreEl = document.getElementById("score");
   const speedEl = document.getElementById("speed");
   const overlayEl = document.getElementById("overlay");
+  const deviceSelectorEl = document.getElementById("device-selector");
+  const onScreenControlsEl = document.getElementById("on-screen-controls");
 
   const GRID_COLS = 30;
   const GRID_ROWS = 30;
@@ -414,6 +416,47 @@
     { passive: true },
   );
 
-  resetGame();
+  // Device Selection & Virtual Controls
+  document.querySelectorAll(".device-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const device = btn.dataset.device;
+      deviceSelectorEl.dataset.visible = "false";
+
+      if (device === "phone" || device === "tab") {
+        onScreenControlsEl.dataset.visible = "true";
+      }
+
+      // Small delay to ensure AudioContext can be initialized on first click
+      setTimeout(() => {
+        initAudio();
+        resetGame();
+      }, 100);
+    });
+  });
+
+  const bindBtn = (id, fn) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    ["touchstart", "mousedown"].forEach((type) => {
+      el.addEventListener(type, (e) => {
+        e.preventDefault();
+        fn();
+      });
+    });
+  };
+
+  bindBtn("btn-up", () => setNextDirVector(0, -1));
+  bindBtn("btn-down", () => setNextDirVector(0, 1));
+  bindBtn("btn-left", () => setNextDirVector(-1, 0));
+  bindBtn("btn-right", () => setNextDirVector(1, 0));
+  bindBtn("btn-space", () => {
+    if (!alive) return;
+    if (!started) return startIfNeeded();
+    initAudio();
+    togglePause();
+  });
+  bindBtn("btn-r", () => resetGame());
+
+  // Wait for device selection instead of starting immediately
   requestAnimationFrame(frame);
 })();
